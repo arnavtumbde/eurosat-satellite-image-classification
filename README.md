@@ -59,3 +59,26 @@ This project classifies satellite images into different land-use categories usin
 - Integrate **GIS-based visualization**.
 - Deploy as a **web-based land monitoring system**.
 
+---
+
+**Output Gallery:**
+
+![image](https://github.com/user-attachments/assets/5d7a7f93-f092-4449-ac98-216e6b74f798)
+
+---
+
+![image](https://github.com/user-attachments/assets/57e50c70-d610-426d-ac76-203bebf78263)
+
+---
+
+![image](https://github.com/user-attachments/assets/acf00da7-f7da-4f43-a8f5-78d0f4708b88)
+
+---
+
+![image](https://github.com/user-attachments/assets/ad6fbd2c-6620-4387-a3e6-d4643091431c)
+
+---END---
+
+
+
+
