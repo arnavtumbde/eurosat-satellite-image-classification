@@ -7,7 +7,7 @@ This project classifies satellite images into different land-use categories usin
 
 ## 📂 Dataset Details
 - **Name:** EuroSAT (Sentinel-2) Dataset
-- **Source:** [EuroSAT Dataset on Kaggle](https://www.kaggle.com/datasets/apollo2506/eurosat-dataset-27500-images-10-classes)
+- **Source:** [EuroSAT Dataset on Kaggle](https://www.kaggle.com/datasets/apollo2506/eurosat-dataset)
 - **Total Images:** 27,500
 - **Image Size:** 64×64 pixels (RGB)
 - **Classes (10 Categories):**
@@ -50,7 +50,7 @@ This project classifies satellite images into different land-use categories usin
 
 ## 🔗 References
 - **EuroSAT Paper:** [https://arxiv.org/abs/1709.00029](https://arxiv.org/abs/1709.00029)
-- **Dataset Source:** [EuroSAT on Kaggle](https://www.kaggle.com/datasets/apollo2506/eurosat-dataset-27500-images-10-classes)
+- **Dataset Source:** [EuroSAT on Kaggle](https://www.kaggle.com/datasets/apollo2506/eurosat-dataset)
 
 ---
 
