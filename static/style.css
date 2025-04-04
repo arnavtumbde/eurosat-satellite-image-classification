@@ -1,0 +1,80 @@
+/* Scientist-Themed UI Aesthetic */
+
+/* General Page Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    text-align: center;
+    padding: 40px;
+}
+
+h1 {
+    font-size: 2rem;
+    color: #004d99; /* Deep Science Blue */
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+/* Form Styling */
+form {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+}
+
+input[type="file"] {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    border: 2px solid #004d99;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button {
+    background-color: #004d99;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background-color: #003366;
+}
+
+/* Prediction Result Styling */
+h2 {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    color: #008000; /* Green for Success */
+}
+
+#statusMessage {
+    margin-top: 10px;
+    font-size: 1rem;
+}
+
+/* Uploaded Image Styling */
+#uploadedImage {
+    border: 3px solid #004d99;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 600px) {
+    form {
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+}

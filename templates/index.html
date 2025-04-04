@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EuroSat Image Classification</title>
+    <style>
+        /* Modern Glass Morphism Design */
+        :root {
+            --primary-color: rgba(52, 152, 219, 0.85);
+            --secondary-color: rgba(155, 89, 182, 0.85);
+            --success-color: rgba(46, 204, 113, 0.85);
+            --error-color: rgba(231, 76, 60, 0.85);
+            --dark-color: rgba(44, 62, 80, 0.9);
+            --light-color: rgba(255, 255, 255, 0.9);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .upload-container {
+            text-align: center;
+        }
+
+        .file-input {
+            margin: 1.5rem 0;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .file-label {
+            display: inline-block;
+            padding: 12px 24px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .file-label:hover {
+            background: rgba(52, 152, 219, 1);
+            transform: translateY(-2px);
+        }
+
+        .upload-btn {
+            background: var(--secondary-color);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .upload-btn:hover {
+            background: rgba(155, 89, 182, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .error {
+            color: var(--error-color);
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            margin: 0.5rem 0;
+        }
+
+        .success {
+            color: var(--success-color);
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            margin: 0.5rem 0;
+        }
+
+        .predicted-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .confidence-meter {
+            height: 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            margin: 1rem 0;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success-color), #27ae60);
+            width: 0%;
+            transition: width 1s ease-out;
+            border-radius: 10px;
+        }
+
+        .result-item {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 0.5rem 0;
+        }
+
+        .class-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .class-item {
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem;
+            border-radius: 5px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .class-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Loading animation */
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .container {
+                width: 95%;
+            }
+            
+            .glass-card {
+                padding: 1.5rem;
+            }
+            
+            .class-list {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>EuroSat Image Classification</h1>
+        
+        <div class="glass-card upload-container">
+            <h2>Upload Satellite Image</h2>
+            
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <form method="post" enctype="multipart/form-data">
+                <div class="file-input">
+                    <label for="file" class="file-label">Choose Image</label>
+                    <input type="file" name="file" id="file" accept=".jpg,.jpeg,.png">
+                    <p id="file-name">No file selected</p>
+                </div>
+                <button type="submit" class="upload-btn">Classify Image</button>
+            </form>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Processing image...</p>
+            </div>
+        </div>
+        
+        {% if prediction %}
+        <div class="glass-card result-container">
+            <h2>Classification Result</h2>
+            
+            {% if uploaded_image %}
+            <div class="result-item">
+                <img src="{{ url_for('static', filename='uploads/' + uploaded_image) }}" 
+                     alt="Uploaded Image" class="predicted-image">
+            </div>
+            {% endif %}
+            
+            <div class="result-item">
+                <p><strong>Predicted Class:</strong> {{ prediction }}</p>
+                <p><strong>Confidence:</strong> {{ confidence }}%</p>
+                
+                <div class="confidence-meter">
+                    <div class="confidence-fill" style="width: {{ confidence }}%"></div>
+                </div>
+            </div>
+            
+        
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+    <script>
+        // File name display
+        document.getElementById('file').addEventListener('change', function(e) {
+            const fileName = e.target.files[0] ? e.target.files[0].name : 'No file selected';
+            document.getElementById('file-name').textContent = fileName;
+        });
+
+        // Loading animation
+        document.querySelector('form').addEventListener('submit', function() {
+            document.getElementById('loading').style.display = 'block';
+        });
+        
+        // Confidence meter animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const fill = document.querySelector('.confidence-fill');
+            if (fill) {
+                setTimeout(() => {
+                    fill.style.width = '{{ confidence }}%';
+                }, 100);
+            }
+        });
+    </script>
+</body>
+</html>
