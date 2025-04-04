@@ -1,4 +1,4 @@
-# EuroSAT Land Use Classification
+# EuroSAT Satellite Image Classification by Arnav Tumbde
 
 ## 📌 Project Overview
 This project classifies satellite images into different land-use categories using deep learning. The model is trained on the **EuroSAT dataset**, which consists of multispectral satellite images captured by the **Sentinel-2 satellite**. It helps in **land monitoring, urban planning, environmental protection, and disaster management**.
